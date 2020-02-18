@@ -1,8 +1,5 @@
 pipeline {
-    agent { 
-        dockerfile true
-        image quay.io/buildah/stable:latest
-    }
+    agent { dockerfile true }
     environment {
         JENKINS_JOB = 'Testing_pipeline_${BUILD_TAG}'
     } 
