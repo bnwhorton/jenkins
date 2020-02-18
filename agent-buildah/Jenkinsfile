@@ -1,0 +1,42 @@
+pipeline {
+    agent { 
+        dockerfile true
+        image quay.io/buildah/stable:latest
+    }
+    environment {
+        JENKINS_JOB = 'Testing_pipeline_${BUILD_TAG}'
+    } 
+    stages {
+        stage('Build') {
+            steps {
+                script {
+		    echo "Starting Job: ${JENKINS_JOB}"
+                    openshift.setLockName(${JENKINS_JOB})
+                }
+            }
+        }
+        stage('Run tests') {
+            parallel {
+                stage('Test run 1') {
+                    steps {
+                        script {
+                            openshift.withCluster(...) {
+                            ...
+                            }
+                        }
+                    }
+                }
+      
+                stage('Test run 2') {
+                    steps {
+                        script {
+                            openshift.withCluster(...) {
+                            ...
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
