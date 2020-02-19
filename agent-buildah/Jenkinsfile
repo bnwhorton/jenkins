@@ -1,5 +1,5 @@
 pipeline {
-    agent { dockerfile true }
+    agent { dockerfile { dir 'agent-buildah' } }
     environment {
         JENKINS_JOB = 'Testing_pipeline_${BUILD_TAG}'
     }
