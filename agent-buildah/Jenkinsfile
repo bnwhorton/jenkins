@@ -1,21 +1,5 @@
 pipeline {
-    agent {
-      kubernetes {
-        label buildah
-        yaml """
-kind: Pod
-metadata:
-  name: jenkins-slave
-spec:
-  containers:
-  - name: Abeona
-    image: quay.io/bwhorton/jnlp-buildah
-    imagePullPolicy: Always
-    tty: true
-    restartPolicy: Never
-"""
-      }
-    }
+    agent { dockerfile { dir 'agent-buildah' } }
     environment {
         JENKINS_JOB = 'Testing_pipeline_${BUILD_TAG}'
     }
