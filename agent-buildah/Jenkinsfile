@@ -1,5 +1,10 @@
 pipeline {
-    agent { dockerfile { dir 'agent-buildah' } }
+    agent {
+        dockerfile {
+            dir 'agent-buildah'
+            registryCredentialsId 'test' 
+        }
+    }
     environment {
         JENKINS_JOB = 'Testing_pipeline_${BUILD_TAG}'
     }

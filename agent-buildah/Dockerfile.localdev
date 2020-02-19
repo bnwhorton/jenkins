@@ -22,7 +22,8 @@ RUN INSTALL_PKGS="buildah podman crio" && \
     mkdir -p $HOME/.m2
 
 # Can we trick the jenkins docker pipeline plugin?
-RUN echo -e '#!/bin/sh \n/usr/bin/buildah "$@"' > /usr/bin/docker && \
+# Build not a buildah command? make it one
+RUN echo -e '#!/bin/sh\nif [ $1 = "build" ]; then\n/usr/bin/buildah bud "${@:2}"\nexit 0\nfi  \n /usr/bin/buildah "$@"' > /usr/bin/docker && \
     chmod +x /usr/bin/docker
 
 # When bash is started non-interactively, to run a shell script, for example it
