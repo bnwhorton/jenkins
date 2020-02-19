@@ -2,7 +2,7 @@ pipeline {
     agent { dockerfile true }
     environment {
         JENKINS_JOB = 'Testing_pipeline_${BUILD_TAG}'
-    } 
+    }
     stages {
         stage('Build') {
             steps {
@@ -17,18 +17,22 @@ pipeline {
                 stage('Test run 1') {
                     steps {
                         script {
-                            openshift.withCluster(...) {
-                            ...
+                            openshift.withCluster(openshift) {
+                                openshift.withProject( 'jenkinsdemo' ) {
+                                  echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
+                                }
                             }
                         }
                     }
                 }
-      
+
                 stage('Test run 2') {
                     steps {
                         script {
-                            openshift.withCluster(...) {
-                            ...
+                            openshift.withCluster(openshift) {
+                                openshift.withProject( 'jenkinsdemo' ) {
+                                  echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
+                                }
                             }
                         }
                     }
