@@ -19,7 +19,11 @@ RUN INSTALL_PKGS="buildah podman crio" && \
     yum $DISABLES install -y $INSTALL_PKGS && \
     rpm -V buildah-*.x86_64 && \
     yum clean all -y && \
-    mkdir -p $HOME/.m2 
+    mkdir -p $HOME/.m2
+
+# Can we trick the jenkins docker pipeline plugin?
+RUN echo -e '#!/bin/sh \n/usr/bin/buildah "$@"' > /usr/bin/docker && \
+    chmod +x /usr/bin/docker
 
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable
